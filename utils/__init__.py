@@ -1,6 +1,8 @@
 import torch
+import gc
 
 def torch_gc():
+    gc.collect()
     if torch.cuda.is_available():
         # with torch.cuda.device(DEVICE):
         torch.cuda.empty_cache()

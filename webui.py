@@ -1,5 +1,6 @@
 import gradio as gr
 import shutil
+from utils import torch_gc
 
 from chains.local_doc_qa import LocalDocQA
 from configs.model_config import *
@@ -91,6 +92,7 @@ def get_answer(query, vs_path, history, mode, score_threshold=VECTOR_SEARCH_SCOR
             history = answer_result.history
             history[-1][-1] = resp
             yield history, ""
+    torch_gc()
     logger.info(f"flagging: username={FLAG_USER_NAME},query={query},vs_path={vs_path},mode={mode},history={history}")
     flag_csv_logger.flag([query, vs_path, history, mode], username=FLAG_USER_NAME)
 
